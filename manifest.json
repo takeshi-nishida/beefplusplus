@@ -1,0 +1,13 @@
+{
+  "name": "BEEF++",
+  "description": "Better BEEF+",
+  "version": "0.1",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": ["https://beefplus.center.kobe-u.ac.jp/lms/course?idnumber=*"],
+      "js": ["course.js"],
+      "css": ["course.css"]
+    }
+  ]
+}
