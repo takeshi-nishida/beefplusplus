@@ -42,10 +42,50 @@ function getFormattedDate(date = new Date()) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// 公開期間の開始時刻を１～５限開始時刻に設定するボタンを追加する
+// 公開期間の開始・終了時刻を授業時間に設定するボタンを追加する 
 ///////////////////////////////////////////////////////////////////////////////
+const periods = [{ start: "08:50", end: "10:20" }, { start: "10:40", end: "12:10" }, { start: "13:20", end: "14:50" }, { start: "15:10", end: "16:40" }, { start: "17:00", end: "18:30" }];
 
-// TODO
+if (document.getElementById("fromDate")) {
+    const selectFromPeriod = createSelectWithDefaultOption("〇限で指定");
+
+    periods.forEach((period, index) => {
+        const start = document.createElement("option");
+        start.value = period.start;
+        start.innerText = `${index+1}限開始`;
+        selectFromPeriod.appendChild(start);
+        const end = document.createElement("option");
+        end.value = period.end;
+        end.innerText = `${index+1}限終了`;
+        selectFromPeriod.appendChild(end);
+    });
+    const selectToPeriod = selectFromPeriod.cloneNode(true);
+    
+    selectFromPeriod.addEventListener("change", (event) => {
+        const [hour, time] = selectFromPeriod.value.split(":");
+        document.getElementById("formHour").value = hour;
+        document.getElementById("formTime").value = time;
+    });
+    
+    selectToPeriod.addEventListener("change", (event) => {
+        const [hour, time] = selectToPeriod.value.split(":");
+        document.getElementById("toHour").value = hour;
+        document.getElementById("toTime").value = time;
+    });
+    
+    document.getElementById("minuitSelectFrom-button").after(selectFromPeriod);
+    document.getElementById("minuitSelectTo-button").after(selectToPeriod);    
+}
+
+function createSelectWithDefaultOption(defaultOptionText) {
+    const selectElement = document.createElement('select');  
+    const defaultOption = document.createElement('option');
+    defaultOption.text = defaultOptionText;
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    selectElement.add(defaultOption);
+    return selectElement;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // お知らせの「メール・LINE通知設定」のデフォルトを「通知する」に設定する
