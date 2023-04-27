@@ -1,20 +1,6 @@
 console.log("Running course.js");
 
 ///////////////////////////////////////////////////////////////////////////////
-// 不要な情報を非表示にする
-///////////////////////////////////////////////////////////////////////////////
-
-Array.from(document.querySelectorAll("span.bold-txt"))
-    .filter(e => e.innerText.includes("公開期間"))
-    .map(e => e.closest(".contents-detail"))
-    .forEach(e => e.style.display = "none");
-
-document.querySelectorAll("div.material-type-file-name")
-    .forEach(e => e.style.display = "none");
-
-// TODO: 教材に「資料」がない場合、表のヘッダーを非表示にする（あるいはいつも非表示にする？）
-
-///////////////////////////////////////////////////////////////////////////////
 // 公開期間設定にデフォルト値を設定する
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -97,26 +83,6 @@ function setRadioValue(name, value) {
 }
 
 setRadioValue("mailSendFlag", "1");
-
-///////////////////////////////////////////////////////////////////////////////
-// お知らせを「メッセージ」が前にまとめて表示されるように並び替える
-///////////////////////////////////////////////////////////////////////////////
-
-const notifications = document.querySelector("#ctrl_menu_notification");
-
-function sortList(ulElement) {
-    Array.from(ulElement.children)
-        .sort((a, b) => {
-            const textA = a.textContent.trim();
-            const textB = b.textContent.trim();
-            const messageA = textA.includes('メッセージ');
-            const messageB = textB.includes('メッセージ');
-            return (messageB - messageA) || textA.localeCompare(textB);
-        })
-        .forEach(item => ulElement.appendChild(item));
-}
-
-if (notifications) sortList(notifications);
 
 ///////////////////////////////////////////////////////////////////////////////
 // メッセージで「問い合わせを完了する」をクリックするよう促す文面を自動挿入する
