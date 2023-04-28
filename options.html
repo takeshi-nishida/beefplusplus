@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>BEEF++ 設定</title>
+    <style>
+        label{
+            display: block;
+        }
+        section{
+            margin-bottom: 20px;
+        }
+    </style>
+  </head>
+  <body>
+    <h2>表示</h2>
+    <section>
+        <label>
+            <input type="checkbox" id="hide_periods" /> 教材の公開期間を非表示にする
+        </label>
+        <label>
+            <input type="checkbox" id="hide_tableheaders" /> 教材資料表の見出し行を非表示にする
+        </label>
+        <label>
+            <input type="checkbox" id="hide_filenames" /> 教材資料のファイル名を非表示にする
+        </label>
+        <label>
+            <input type="checkbox" id="sort_notifications" /> おしらせを種類毎に並び替える
+        </label>
+    </section>
+
+    <h1>教員向け</h1>
+    <section>
+        <h2>公開期間・掲示期間の設定</h2>
+        <label>
+            <input type="checkbox" id="set_default_datetimes" /> 期間が未設定の場合に初期値を設定する
+        </label>
+    
+        <label>
+            <input type="checkbox" id="use_coursetime_buttons" /> 開始・終了時刻を授業時間に合わせるボタンを追加する 
+        </label>
+    </section>
+
+
+    <section>
+        <h2>お知らせ・メッセージ</h2>
+        <label>
+            <input type="checkbox" id="notify_by_default" /> 「メール・LINE通知設定」の初期値を「通知する」にする
+        </label>
+        <label>
+            <input type="checkbox" id="insert_clickcomplete_message" /> 「問い合わせを完了する」のクリックを促す文面を挿入する
+        </label>    
+    </section>
+
+    <script src="common.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

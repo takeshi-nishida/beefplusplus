@@ -6,16 +6,23 @@
   "content_scripts": [
     {
       "matches": ["https://beefplus.center.kobe-u.ac.jp/*"],
-      "js": ["all.js"]
+      "js": ["common.js", "all.js"]
     },
     {
       "matches": ["https://beefplus.center.kobe-u.ac.jp/lms/course*"],
-      "js": ["course.js"],
+      "js": ["common.js", "course.js"],
       "css": ["course.css"]
     },
     {
       "matches": ["https://beefplus.center.kobe-u.ac.jp/lms/course?idnumber=*"],
-      "js": ["course_top.js"]
+      "js": ["common.js", "course_top.js"]
     }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "storage"
   ]
 }
