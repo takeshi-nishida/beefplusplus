@@ -2,7 +2,14 @@
 // お知らせを「メッセージ」が前にまとめて表示されるように並び替える
 ///////////////////////////////////////////////////////////////////////////////
 
-const notifications = document.querySelector("#ctrl_menu_notification");
+chrome.storage.sync.get(optionNames, (items) => {
+    if(items["sort_notifications"]) sortNotifications();
+});
+
+function sortNotifications() {
+    const notifications = document.querySelector("#ctrl_menu_notification");
+    if (notifications) sortList(notifications);    
+}
 
 function sortList(ulElement) {
     Array.from(ulElement.children)
@@ -15,5 +22,3 @@ function sortList(ulElement) {
         })
         .forEach(item => ulElement.appendChild(item));
 }
-
-if (notifications) sortList(notifications);

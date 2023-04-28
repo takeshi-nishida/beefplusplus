@@ -1,5 +1,12 @@
 console.log("Running course.js");
 
+chrome.storage.sync.get(optionNames, (items) => {
+    if (items["set_default_datetimes"]) setDefaultDatetimes();
+    if (items["use_coursetime_buttons"]) useCoursetimeButtons();
+    if (items["notify_by_default"]) notifyByDefault();
+    if (items["insert_clickcomplete_message"]) insertClickcompleteMessage();
+});
+
 ///////////////////////////////////////////////////////////////////////////////
 // 公開期間設定にデフォルト値を設定する
 ///////////////////////////////////////////////////////////////////////////////
@@ -13,10 +20,12 @@ const defaultValues = {
     "input#toTime": "59"
 }
 
-for (const [query, value] of Object.entries(defaultValues)) {
-    const input = document.querySelector(query);
-    if (input && !input.value) {
-        input.value = value;
+function setDefaultDatetimes() {
+    for (const [query, value] of Object.entries(defaultValues)) {
+        const input = document.querySelector(query);
+        if (input && !input.value) {
+            input.value = value;
+        }
     }
 }
 
@@ -32,35 +41,37 @@ function getFormattedDate(date = new Date()) {
 ///////////////////////////////////////////////////////////////////////////////
 const periods = [{ start: "08:50", end: "10:20" }, { start: "10:40", end: "12:10" }, { start: "13:20", end: "14:50" }, { start: "15:10", end: "16:40" }, { start: "17:00", end: "18:30" }];
 
-if (document.getElementById("fromDate")) {
-    const selectFromPeriod = createSelectWithDefaultOption("〇限で指定");
+function useCoursetimeButtons() {
+    if (document.getElementById("fromDate")) {
+        const selectFromPeriod = createSelectWithDefaultOption("〇限で指定");
 
-    periods.forEach((period, index) => {
-        const start = document.createElement("option");
-        start.value = period.start;
-        start.innerText = `${index+1}限開始`;
-        selectFromPeriod.appendChild(start);
-        const end = document.createElement("option");
-        end.value = period.end;
-        end.innerText = `${index+1}限終了`;
-        selectFromPeriod.appendChild(end);
-    });
-    const selectToPeriod = selectFromPeriod.cloneNode(true);
-    
-    selectFromPeriod.addEventListener("change", (event) => {
-        const [hour, time] = selectFromPeriod.value.split(":");
-        document.getElementById("formHour").value = hour;
-        document.getElementById("formTime").value = time;
-    });
-    
-    selectToPeriod.addEventListener("change", (event) => {
-        const [hour, time] = selectToPeriod.value.split(":");
-        document.getElementById("toHour").value = hour;
-        document.getElementById("toTime").value = time;
-    });
-    
-    document.getElementById("minuitSelectFrom-button").after(selectFromPeriod);
-    document.getElementById("minuitSelectTo-button").after(selectToPeriod);    
+        periods.forEach((period, index) => {
+            const start = document.createElement("option");
+            start.value = period.start;
+            start.innerText = `${index + 1}限開始`;
+            selectFromPeriod.appendChild(start);
+            const end = document.createElement("option");
+            end.value = period.end;
+            end.innerText = `${index + 1}限終了`;
+            selectFromPeriod.appendChild(end);
+        });
+        const selectToPeriod = selectFromPeriod.cloneNode(true);
+
+        selectFromPeriod.addEventListener("change", (event) => {
+            const [hour, time] = selectFromPeriod.value.split(":");
+            document.getElementById("formHour").value = hour;
+            document.getElementById("formTime").value = time;
+        });
+
+        selectToPeriod.addEventListener("change", (event) => {
+            const [hour, time] = selectToPeriod.value.split(":");
+            document.getElementById("toHour").value = hour;
+            document.getElementById("toTime").value = time;
+        });
+
+        document.getElementById("minuitSelectFrom-button").after(selectFromPeriod);
+        document.getElementById("minuitSelectTo-button").after(selectToPeriod);
+    }
 }
 
 function createSelectWithDefaultOption(defaultOptionText) {
@@ -77,18 +88,22 @@ function createSelectWithDefaultOption(defaultOptionText) {
 // お知らせの「メール・LINE通知設定」のデフォルトを「通知する」に設定する
 ///////////////////////////////////////////////////////////////////////////////
 
+function notifyByDefault() {
+    setRadioValue("mailSendFlag", "1");
+}
+
 function setRadioValue(name, value) {
     const radios = document.getElementsByName(name);
     Array.from(radios).forEach(radio => { radio.checked = radio.value === value });
 }
 
-setRadioValue("mailSendFlag", "1");
-
 ///////////////////////////////////////////////////////////////////////////////
 // メッセージで「問い合わせを完了する」をクリックするよう促す文面を自動挿入する
 ///////////////////////////////////////////////////////////////////////////////
 
-const inquiryComment = document.querySelector("#inquiryComment");
-if (inquiryComment) {
-    inquiryComment.value = "\n\nこの回答で問い合わせいただいた内容が解決した場合は「問い合わせを完了する」ボタンを押していただけると助かります。";
+function insertClickcompleteMessage() {
+    const inquiryComment = document.querySelector("#inquiryComment");
+    if (inquiryComment) {
+        inquiryComment.value = "\n\nこの回答で問い合わせいただいた内容が解決した場合は「問い合わせを完了する」ボタンを押していただけると助かります。";
+    }
 }
