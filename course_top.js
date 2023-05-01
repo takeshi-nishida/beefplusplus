@@ -10,7 +10,7 @@ chrome.storage.sync.get(optionNames, (items) => {
 
 function hidePeriods() {
     Array.from(document.querySelectorAll("span.bold-txt"))
-        .filter(e => e.innerText.includes("公開期間"))
+        .filter(e => e.innerText.includes("公開期間") && !e.innerText.includes("結果"))
         .map(e => e.closest(".contents-detail"))
         .forEach(e => e.style.display = "none");
 }
