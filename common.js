@@ -1,10 +1,10 @@
-const optionNames = [
-    "hide_periods",
-    "hide_tableheaders",
-    "hide_filenames",
-    "sort_notifications",
-    "set_default_datetimes",
-    "use_coursetime_buttons",
-    "notify_by_default",
-    "insert_clickcomplete_message"
-];
+const optionNames = {
+    "hide_periods" : true,
+    "hide_tableheaders": true,
+    "hide_filenames": true,
+    "sort_notifications": true,
+    "set_default_datetimes": true,
+    "use_coursetime_buttons": true,
+    "notify_by_default": true,
+    "insert_clickcomplete_message": true
+};
