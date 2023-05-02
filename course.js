@@ -40,38 +40,40 @@ function getFormattedDate(date = new Date()) {
 // 公開期間の開始・終了時刻を授業時間に設定するボタンを追加する 
 ///////////////////////////////////////////////////////////////////////////////
 const periods = [{ start: "08:50", end: "10:20" }, { start: "10:40", end: "12:10" }, { start: "13:20", end: "14:50" }, { start: "15:10", end: "16:40" }, { start: "17:00", end: "18:30" }];
+const times = [ "00:00", "23:59" ];
 
 function useCoursetimeButtons() {
-    if (document.getElementById("fromDate")) {
-        const selectFromPeriod = createSelectWithDefaultOption("〇限で指定");
+    const fromButton = document.getElementById("minuitSelectFrom-button");
+    if (fromButton) fromButton.after(createTimeShortcutSelect("formHour", "formTime"));
 
-        periods.forEach((period, index) => {
-            const start = document.createElement("option");
-            start.value = period.start;
-            start.innerText = `${index + 1}限開始`;
-            selectFromPeriod.appendChild(start);
-            const end = document.createElement("option");
-            end.value = period.end;
-            end.innerText = `${index + 1}限終了`;
-            selectFromPeriod.appendChild(end);
-        });
-        const selectToPeriod = selectFromPeriod.cloneNode(true);
+    const toButton = document.getElementById("minuitSelectTo-button");
+    if (toButton) toButton.after(createTimeShortcutSelect("toHour", "toTime"));
+}
 
-        selectFromPeriod.addEventListener("change", (event) => {
-            const [hour, time] = selectFromPeriod.value.split(":");
-            document.getElementById("formHour").value = hour;
-            document.getElementById("formTime").value = time;
-        });
-
-        selectToPeriod.addEventListener("change", (event) => {
-            const [hour, time] = selectToPeriod.value.split(":");
-            document.getElementById("toHour").value = hour;
-            document.getElementById("toTime").value = time;
-        });
-
-        document.getElementById("minuitSelectFrom-button").after(selectFromPeriod);
-        document.getElementById("minuitSelectTo-button").after(selectToPeriod);
-    }
+function createTimeShortcutSelect(hourId, timeID) {
+    const selectElement = createSelectWithDefaultOption("よく使う時間");
+    periods.forEach((period, index) => {
+        const start = document.createElement("option");
+        start.value = period.start;
+        start.innerText = `${index + 1}限開始`;
+        selectElement.appendChild(start);
+        const end = document.createElement("option");
+        end.value = period.end;
+        end.innerText = `${index + 1}限終了`;
+        selectElement.appendChild(end);
+    });
+    times.forEach((time, index) => {
+        const option = document.createElement("option");
+        option.value = time;
+        option.innerText = time;
+        selectElement.appendChild(option);
+    });
+    selectElement.addEventListener("change", (event) => {
+        const [hour, time] = selectElement.value.split(":");
+        document.getElementById(hourId).value = hour;
+        document.getElementById(timeID).value = time;
+    });
+    return selectElement;
 }
 
 function createSelectWithDefaultOption(defaultOptionText) {
