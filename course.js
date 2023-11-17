@@ -5,6 +5,7 @@ chrome.storage.sync.get(optionNames, (items) => {
     if (items["use_coursetime_buttons"]) useCoursetimeButtons();
     if (items["notify_by_default"]) notifyByDefault();
     if (items["insert_clickcomplete_message"]) insertClickcompleteMessage();
+    if (items["mailto"]) replaceStudentIDWithMailto();
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -109,3 +110,51 @@ function insertClickcompleteMessage() {
         inquiryComment.value = "\n\nこの回答で問い合わせいただいた内容が解決した場合は「問い合わせを完了する」ボタンを押していただけると助かります。";
     }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// 学籍番号を mailto: リンクにする
+///////////////////////////////////////////////////////////////////////////////
+const studentIdPattern = /\d{7}[A-Z]|\d{3}[A-Z]\d{3}[A-Z]|\d{3}[A-Z]{2}\d{2}[A-Z]/;
+const ignoreNodeName = ["A", "SCRIPT", "STYLE"];
+
+function replaceStudentIDWithMailto() {
+    function replaceTextNode(textNode) {
+        const studentIDMatches = textNode.nodeValue.match(studentIdPattern);
+        if (studentIDMatches) {
+            const parentNode = textNode.parentNode;
+            const fragment = document.createDocumentFragment();
+            let lastIndex = 0;
+            for (const match of studentIDMatches) {
+                const startIndex = textNode.nodeValue.indexOf(match, lastIndex);
+                fragment.appendChild(document.createTextNode(textNode.nodeValue.substring(lastIndex, startIndex)));
+
+                const email = `${match.toLowerCase()}@stu.kobe-u.ac.jp`;
+                const link = document.createElement('a');
+                link.href = `mailto:${email}`;
+                link.appendChild(document.createTextNode(match));
+                fragment.appendChild(link);
+
+                lastIndex = startIndex + match.length;
+            }
+            fragment.appendChild(document.createTextNode(textNode.nodeValue.substring(lastIndex)));
+            parentNode.replaceChild(fragment, textNode);
+        }
+    }
+
+    function walk(node) {
+        switch (node.nodeType) {
+            case Node.ELEMENT_NODE:
+                if (!ignoreNodeName.includes(node.nodeName)) {
+                    for (const childNode of node.childNodes) {
+                        walk(childNode);
+                    }
+                }
+                break;
+            case Node.TEXT_NODE:
+                replaceTextNode(node);
+                break;
+        }
+    }
+
+    walk(document.body);
+}  

@@ -6,5 +6,6 @@ const optionNames = {
     "set_default_datetimes": true,
     "use_coursetime_buttons": true,
     "notify_by_default": true,
-    "insert_clickcomplete_message": true
+    "insert_clickcomplete_message": true,
+    "mailto": true
 };
