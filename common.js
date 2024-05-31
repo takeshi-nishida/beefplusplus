@@ -7,5 +7,6 @@ const optionNames = {
     "use_coursetime_buttons": true,
     "notify_by_default": true,
     "insert_clickcomplete_message": true,
-    "mailto": true
+    "mailto": true,
+    "title_tab": true
 };

@@ -1,12 +1,15 @@
-///////////////////////////////////////////////////////////////////////////////
-// 不要な情報を非表示にする
-///////////////////////////////////////////////////////////////////////////////
+console.log("Running course_top.js");
 
 chrome.storage.sync.get(optionNames, (items) => {
     if(items["hide_periods"]) hidePeriods();
     if(items["hide_tableheaders"]) hideTableheaders();
     if(items["hide_filenames"]) hideFilenames();
+    if(items["title_tab"]) titleTab();
 });
+
+///////////////////////////////////////////////////////////////////////////////
+// 不要な情報を非表示にする
+///////////////////////////////////////////////////////////////////////////////
 
 function hidePeriods() {
     Array.from(document.querySelectorAll("span.bold-txt"))
@@ -25,4 +28,15 @@ function hideTableheaders() {
 function hideFilenames() {
     document.querySelectorAll("div.material-type-file-name")
         .forEach(e => e.style.display = "none");
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// 表示を変更する
+///////////////////////////////////////////////////////////////////////////////
+
+function titleTab() {
+    const titleElement = document.querySelector(".course-title-txt");
+    if(titleElement){
+        document.title = titleElement.textContent.replace(/[\r\n]/g, "").trim();
+    }
 }
