@@ -5,6 +5,7 @@ chrome.storage.sync.get(optionNames, (items) => {
     if(items["hide_tableheaders"]) hideTableheaders();
     if(items["hide_filenames"]) hideFilenames();
     if(items["title_tab"]) titleTab();
+    adjustHeights();
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -21,6 +22,15 @@ function hideTableheaders() {
 function hideFilenames() {
     document.querySelectorAll("div.material-type-file-name")
         .forEach(e => e.style.display = "none");
+}
+
+function adjustHeights() {
+    document.querySelectorAll(".block").forEach(b => {
+        const title = b.querySelector(".block-title");
+        const content = b.querySelector(".block-contents");
+        content.style.height = "auto";
+        title.style.height = content.offsetHeight + "px";
+    });
 }
 
 ///////////////////////////////////////////////////////////////////////////////
