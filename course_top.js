@@ -65,8 +65,10 @@ function formatPeriod(e){
 
 function titleTab() {
     const titleElement = document.querySelector(".course-title-txt");
-    if(titleElement){
-        document.title = titleElement.textContent.replace(/[\r\n]/g, "").trim();
+
+    if (titleElement) {
+        const spans = titleElement.querySelectorAll("span");
+        document.title = spans[0].textContent + " " + spans[spans.length - 1].textContent;
     }
 }
 
