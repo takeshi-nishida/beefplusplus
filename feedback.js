@@ -31,7 +31,7 @@ function emphasizeLateSubmission() {
     const spans = document.querySelectorAll("span");
     spans.forEach(span => {
         if (span.textContent.includes("期限後提出")) {
-            span.classList.add("bold-txt", "highlight-txt");
+            span.classList.add("strong-warning");
         }
     });
 }

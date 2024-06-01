@@ -6,6 +6,7 @@ chrome.storage.sync.get(optionNames, (items) => {
     if (items["notify_by_default"]) notifyByDefault();
     if (items["insert_clickcomplete_message"]) insertClickcompleteMessage();
     if (items["mailto"]) replaceStudentIDWithMailto();
+    if (items["add_strong_warning"]) addStrongWarning();
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -157,4 +158,14 @@ function replaceStudentIDWithMailto() {
     }
 
     walk(document.body);
-}  
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// 「登録する」押し忘れ防止
+///////////////////////////////////////////////////////////////////////////////
+function addStrongWarning() {
+    const title = document.querySelector(".contents-title-txt");
+    if (title.textContent.includes("確認")) {
+        title.classList.add("strong-warning");
+    }
+}
