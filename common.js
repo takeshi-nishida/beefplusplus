@@ -13,6 +13,7 @@ const optionNames = {
     "show_submission_text_length": true,
     "adjacent_feedback_button": true,
     "add_strong_warning": true,
+    "promote_default_actions": true
 };
 
 // 残り時間[秒]を計算する

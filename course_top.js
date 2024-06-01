@@ -5,6 +5,12 @@ chrome.storage.sync.get(optionNames, (items) => {
     if(items["hide_tableheaders"]) hideTableheaders();
     if(items["hide_filenames"]) hideFilenames();
     if(items["title_tab"]) titleTab();
+    
+    // コース編集画面の場合
+    if(document.getElementById("course_edit")){
+        if(items["promote_default_actions"]) promoteDefaultActions();        
+    }
+
     adjustHeights();
 });
 
@@ -62,4 +68,29 @@ function titleTab() {
     if(titleElement){
         document.title = titleElement.textContent.replace(/[\r\n]/g, "").trim();
     }
+}
+
+function promoteDefaultActions() {
+    promoteDefaultActionsImpl("report", "course-edit-report-name");
+    promoteDefaultActionsImpl("examination", "course-edit-examination-name");
+    promoteDefaultActionsImpl("questionnaire", "course-edit-questionnaire-name");
+    promoteDefaultActionsImpl("discussion", "course-edit-forum-title");
+}
+
+function promoteDefaultActionsImpl(id, className) {
+    const block = document.getElementById(id);
+    block.querySelectorAll("div.course-result-list").forEach(l => {
+        const editAction = l.querySelector("a." + className);
+        const defaultAction = l.querySelector("li.control-list > a").cloneNode(true);
+        const wrapper = document.createElement("div");
+
+        editAction.classList.remove(className);
+        wrapper.classList.add(className);
+        editAction.parentNode.insertBefore(wrapper, editAction);
+        wrapper.appendChild(editAction);
+        wrapper.appendChild(defaultAction);
+        defaultAction.className = "";
+        wrapper.style.display = "flex";
+        wrapper.style.justifyContent = "space-between";
+    });
 }

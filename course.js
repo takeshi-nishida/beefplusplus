@@ -165,7 +165,7 @@ function replaceStudentIDWithMailto() {
 ///////////////////////////////////////////////////////////////////////////////
 function addStrongWarning() {
     const title = document.querySelector(".contents-title-txt");
-    if (title.textContent.includes("確認")) {
+    if (title.textContent.includes("登録確認")) {
         title.classList.add("strong-warning");
     }
 }
