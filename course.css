@@ -3,3 +3,7 @@
     color: blue;
     cursor: pointer;
 }
+
+.feedback-savemove-btn {
+    width: auto !important;
+}
