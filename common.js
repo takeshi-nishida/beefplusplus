@@ -10,6 +10,7 @@ const optionNames = {
     "mailto": true,
     "title_tab": true,
     "count_forum_messages": true,
+    "show_submission_text_length": true,
 };
 
 // 残り時間[秒]を計算する

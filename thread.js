@@ -1,3 +1,5 @@
+console.log("Running thread.js");
+
 chrome.storage.sync.get(optionNames, (items) => {
     if(items["count_forum_messages"]) countForumMessages();
 });

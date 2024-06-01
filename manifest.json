@@ -20,6 +20,10 @@
     {
       "matches": ["https://beefplus.center.kobe-u.ac.jp/lms/course/forums/thread*"],
       "js": ["common.js", "thread.js"]
+    },
+    {
+      "matches": ["https://beefplus.center.kobe-u.ac.jp/lms/course/report/feedback*"],
+      "js": ["common.js", "feedback.js"]
     }
   ],
   "options_ui": {
