@@ -8,7 +8,8 @@ const optionNames = {
     "notify_by_default": true,
     "insert_clickcomplete_message": true,
     "mailto": true,
-    "title_tab": true
+    "title_tab": true,
+    "count_forum_messages": true,
 };
 
 // 残り時間[秒]を計算する

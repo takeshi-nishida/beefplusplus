@@ -16,6 +16,10 @@
     {
       "matches": ["https://beefplus.center.kobe-u.ac.jp/lms/course?idnumber=*"],
       "js": ["common.js", "course_top.js"]
+    },
+    {
+      "matches": ["https://beefplus.center.kobe-u.ac.jp/lms/course/forums/thread*"],
+      "js": ["common.js", "thread.js"]
     }
   ],
   "options_ui": {
