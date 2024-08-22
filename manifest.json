@@ -1,6 +1,6 @@
 {
   "name": "BEEF++",
-  "description": "Better BEEF+",
+  "description": "神戸大学LMS BEEF+ をもっと使いやすくする拡張機能です",
   "version": "0.1",
   "manifest_version": 3,
   "icons": { 
