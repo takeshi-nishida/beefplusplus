@@ -13,7 +13,9 @@ const optionNames = {
     "show_submission_text_length": true,
     "adjacent_feedback_button": true,
     "add_strong_warning": true,
-    "promote_default_actions": true
+    "promote_default_actions": true,
+    "hide_student_names_from_top": true,
+    "show_remaining_times": true,
 };
 
 // 残り時間[秒]を計算する

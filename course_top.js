@@ -7,9 +7,8 @@ chrome.storage.sync.get(optionNames, (items) => {
     if(items["hide_tableheaders"]) hideTableheaders();
     if(items["hide_filenames"]) hideFilenames();
     if(items["title_tab"]) titleTab();
-    // TODO: メッセージ内の送信者を隠すオプションを確認して再表示する
-
-    showRemainingTimes();
+    if(!items["hide_student_names_from_top"]) showStudentNames();
+    if(items["show_remaining_times"]) showRemainingTimes();
 
     // コース編集画面の場合
     if(document.getElementById("course_edit")){
@@ -121,6 +120,14 @@ function hideStudentNames() {
 
     statusElements.forEach(element => {
         element.textContent = element.textContent.replace(/\(.*?\)/, '').trim();
+    });
+}
+
+function showStudentNames() {
+    const studentNames = document.querySelectorAll(".inquiryStudentName");
+
+    studentNames.forEach(studentName => {
+        studentName.style.opacity = '1';
     });
 }
 
