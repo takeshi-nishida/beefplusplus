@@ -1,11 +1,14 @@
 console.log("Running course_top.js");
 
+hideStudentNames();
+
 chrome.storage.sync.get(optionNames, (items) => {
     if(items["format_periods"]) formatPeriods();
     if(items["hide_tableheaders"]) hideTableheaders();
     if(items["hide_filenames"]) hideFilenames();
     if(items["title_tab"]) titleTab();
-    
+    // TODO: メッセージ内の送信者を隠すオプションを確認して再表示する
+
     // コース編集画面の場合
     if(document.getElementById("course_edit")){
         if(items["promote_default_actions"]) promoteDefaultActions();        
@@ -94,5 +97,27 @@ function promoteDefaultActionsImpl(id, className) {
         defaultAction.className = "";
         wrapper.style.display = "flex";
         wrapper.style.justifyContent = "space-between";
+    });
+}
+
+function hideStudentNames() {
+    const studentNames = document.querySelectorAll(".inquiryStudentName");
+
+    studentNames.forEach(studentName => {
+        studentName.style.opacity = '0';
+
+        studentName.addEventListener('mouseenter', () => {
+            studentName.style.opacity = '1';
+        });
+
+        studentName.addEventListener('mouseleave', () => {
+            studentName.style.opacity = '0';
+        });
+    });
+
+    const statusElements = document.querySelectorAll('.course-edit-inquiry-status');
+
+    statusElements.forEach(element => {
+        element.textContent = element.textContent.replace(/\(.*?\)/, '').trim();
     });
 }
