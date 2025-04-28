@@ -9,6 +9,8 @@ chrome.storage.sync.get(optionNames, (items) => {
     if(items["title_tab"]) titleTab();
     // TODO: メッセージ内の送信者を隠すオプションを確認して再表示する
 
+    showRemainingTimes();
+
     // コース編集画面の場合
     if(document.getElementById("course_edit")){
         if(items["promote_default_actions"]) promoteDefaultActions();        
@@ -119,5 +121,28 @@ function hideStudentNames() {
 
     statusElements.forEach(element => {
         element.textContent = element.textContent.replace(/\(.*?\)/, '').trim();
+    });
+}
+
+function showRemainingTimes() {
+    const elements = document.querySelectorAll('.timeEnd, .exPeriod, .surveyPeriod');
+    
+    elements.forEach(e => {
+        const originalText = e.textContent;
+        let endTimeText;
+        if (e.classList.contains('timeEnd')) {
+            endTimeText = e.textContent.trim();
+        } else {
+            const parts = e.textContent.split('～');
+            endTimeText = parts.length > 1 ? parts[1].trim() : parts[0].trim();
+        }
+
+        const endDate = new Date(endTimeText);
+        let showOriginal = true;
+
+        setInterval(() => {
+            e.innerText = showOriginal ? originalText : timeInText(remainingTime(endDate));
+            showOriginal = !showOriginal;
+        }, 3000);
     });
 }
