@@ -39,6 +39,47 @@ function getFormattedDate(date = new Date()) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// 「9999/12/31」をクリックすると「今日にする」ボタンを表示する
+///////////////////////////////////////////////////////////////////////////////
+
+document.querySelectorAll('.input-calender').forEach(el => {
+    el.addEventListener('focus', () => { // clickよりfocusの方がキーボード操作も拾えて親切です
+        if (el.value !== "9999/12/31") return;
+        if (document.getElementById('date-fix-popup')) return;
+
+        const popup = document.createElement('div');
+        popup.id = 'date-fix-popup';
+        popup.innerText = "今日にする";
+        popup.className = 'today-btn';
+        const rect = el.getBoundingClientRect();
+        popup.style.top = `${rect.top}px`;
+        popup.style.left = `${rect.left + rect.width + 8}px`;
+        popup.style.height = `${rect.height}px`;
+
+        popup.onclick = (e) => {
+            e.preventDefault();
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            el.value = `${y}/${m}/${d}`;
+            popup.remove();
+            setTimeout(() => { el.focus(); }, 0);
+        };
+
+        document.body.appendChild(popup);
+
+        const removeHandler = (event) => {
+            if (!el.contains(event.target) && !popup.contains(event.target)) {
+                popup.remove();
+                document.removeEventListener('mousedown', removeHandler);
+            }
+        };
+        document.addEventListener('mousedown', removeHandler);
+    });
+});
+
+///////////////////////////////////////////////////////////////////////////////
 // 公開期間の開始・終了時刻を授業時間に設定するボタンを追加する 
 ///////////////////////////////////////////////////////////////////////////////
 const periods = [{ start: "08:50", end: "10:20" }, { start: "10:40", end: "12:10" }, { start: "13:20", end: "14:50" }, { start: "15:10", end: "16:40" }, { start: "17:00", end: "18:30" }];
