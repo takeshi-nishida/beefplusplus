@@ -153,3 +153,60 @@ function showRemainingTimes() {
         }, 3000);
     });
 }
+
+
+///////////////////////////////////////////////////////////////////////////////
+// お知らせ開封確認を見やすくする
+///////////////////////////////////////////////////////////////////////////////
+
+const statusView = document.getElementById('info_status_view');
+
+if (statusView) {
+    const observer = new MutationObserver((mutations) => {
+        const rows = statusView.querySelectorAll('.result-list:not(.show-status)');
+        let viewedCount = 0;
+
+        if (rows.length > 0) {
+            console.log("Detected new status rows, updating...");
+            
+            rows.forEach(row => {
+                row.classList.add('show-status');
+                
+                // 1. 日付が入っている span を探す (01/31 04:01)
+                const statusSpan = row.querySelector('.infomation-status-list-status span');
+                const dateText = statusSpan ? statusSpan.textContent.trim() : "";
+
+                // 2. 判定とクラス付与
+                if (dateText && /[\d\/]/.test(dateText)) {
+                    viewedCount++;
+                    const currentYear = new Date().getFullYear();
+                    const viewDate = new Date(`${currentYear}/${dateText}`);
+                    const diffHours = (new Date() - viewDate) / (1000 * 60 * 60);
+
+                    if (diffHours < 24) {
+                        row.classList.add('status-recent');
+                    } else {
+                        row.classList.add('status-viewed');
+                    }
+                } else {
+                    row.classList.add('status-unviewed');
+                }
+            });
+
+            const rate = ((viewedCount / rows.length) * 100).toFixed(1);
+            
+            const infoTitle = Array.from(document.querySelectorAll('.block-title-txt'))
+                       .find(el => el.textContent.includes('開封状況'));
+
+            if (infoTitle && !infoTitle.querySelector('.rate-badge')) {
+                const badge = document.createElement('span');
+                badge.className = 'rate-badge';
+                badge.textContent = `${viewedCount} / ${rows.length} (${rate}%)`;
+                infoTitle.appendChild(badge);
+            }
+        }
+    });
+
+    // 器の中身（子要素）の変化を監視開始
+    observer.observe(statusView, { childList: true, subtree: true });
+}

@@ -1,7 +1,7 @@
 {
   "name": "BEEF++",
   "description": "神戸大学LMS BEEF+ をもっと使いやすくする拡張機能です",
-  "version": "0.2",
+  "version": "0.3",
   "manifest_version": 3,
   "icons": { 
     "16": "icons/icon16.png",
@@ -29,6 +29,10 @@
     {
       "matches": ["https://beefplus.center.kobe-u.ac.jp/lms/course/report/feedback*"],
       "js": ["common.js", "feedback.js"]
+    },
+    {
+      "matches": ["https://beefplus.center.kobe-u.ac.jp/lms/course/material/status*"],
+      "js": ["common.js", "material.js"]
     },
     {
       "matches": ["https://beefplus.center.kobe-u.ac.jp/portal/home*", "https://beefplus.center.kobe-u.ac.jp/lms/timetable*"],
