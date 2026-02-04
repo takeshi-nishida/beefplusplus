@@ -35,6 +35,10 @@
       "js": ["common.js", "material.js"]
     },
     {
+      "matches": ["https://beefplus.center.kobe-u.ac.jp/lms/course/log*"],
+      "js": ["common.js", "log.js"],
+      "css": ["log.css"]
+    },    {
       "matches": ["https://beefplus.center.kobe-u.ac.jp/portal/home*", "https://beefplus.center.kobe-u.ac.jp/lms/timetable*"],
       "js": ["common.js", "timetable.js"]
     }
