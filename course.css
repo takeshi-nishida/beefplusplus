@@ -83,6 +83,5 @@
 }
 
 .block-title-txt {
-    display: flex !important;
     align-items: center;
 }
