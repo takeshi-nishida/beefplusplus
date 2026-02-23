@@ -16,6 +16,10 @@ const optionNames = {
     "promote_default_actions": true,
     "hide_student_names_from_top": true,
     "show_remaining_times": true,
+    "show_boost_dialog": true,
+    "beautify_notification_open_status": true,
+    "beautify_file_open_status": true,
+    "beautify_operation_log": true,
 };
 
 // 残り時間[秒]を計算する

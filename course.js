@@ -43,7 +43,7 @@ function getFormattedDate(date = new Date()) {
 ///////////////////////////////////////////////////////////////////////////////
 
 document.querySelectorAll('.input-calender').forEach(el => {
-    el.addEventListener('focus', () => { // clickよりfocusの方がキーボード操作も拾えて親切です
+    el.addEventListener('focus', () => {
         if (el.value !== "9999/12/31") return;
         if (document.getElementById('date-fix-popup')) return;
 
